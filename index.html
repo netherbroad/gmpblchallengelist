@@ -36,7 +36,6 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
     <a class="sub" href="https://google.com" target="_blank">Submit</a>
   </div>
 </header>
-
 <div class="grid" id="vList">
   <div class="box" id="cList"></div>
   <div class="box" id="cDet"></div>
@@ -45,31 +44,20 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
     <h3>Submission Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Any difficulty is allowed (must match challenge rules).<br>• No cheats, noclip, or glitches (no abuse).<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies & presets.</p>
   </div>
 </div>
-
 <div class="grid hide" id="vLb" style="grid-template-columns:1fr;max-width:650px"><div class="box"><h2>Leaderboard</h2><table id="lbTbl" style="margin-top:12px"></table></div></div>
-
 <div class="grid hide" id="vAdm" style="grid-template-columns:1fr 1fr;max-width:1000px">
   <div class="box">
     <h3 id="fTitle" style="margin-bottom:10px">➕ Новый челлендж</h3>
-    <input id="iName" placeholder="Challenge Name">
-    <input id="iAuth" placeholder="Creator">
-    <input id="iVer" placeholder="Verifier">
-    <input id="iPts" type="number" value="100" placeholder="Points">
-    <input id="iAnom" placeholder="Anomaly">
-    <input id="iEsc" placeholder="Escape">
-    <input id="iVid" placeholder="YouTube Link">
-    <textarea id="iRules" rows="5" placeholder="Условия (с новой строки)"></textarea>
+    <input id="iName" placeholder="Challenge Name"><input id="iAuth" placeholder="Creator"><input id="iVer" placeholder="Verifier"><input id="iPts" type="number" value="100" placeholder="Points"><input id="iAnom" placeholder="Anomaly"><input id="iEsc" placeholder="Escape"><input id="iVid" placeholder="YouTube Link"><textarea id="iRules" rows="5" placeholder="Условия (с новой строки)"></textarea>
     <div style="display:flex;gap:8px"><button class="act-btn" id="fBtn" onclick="saveCh()">Добавить</button><button class="act-btn hide" id="cBtn" style="background:#666" onclick="rst()">Отмена</button></div>
     <div id="eRecs" style="margin-top:14px"></div>
   </div>
   <div class="box">
     <h3 style="margin-bottom:10px">📋 Управление</h3><div id="aList" style="margin-bottom:16px"></div>
     <h3>➕ Добавить рекорд</h3><select id="rSel"></select><input id="rUsr" placeholder="Ник"><input id="rLnk" placeholder="YouTube"><input id="rFps" type="number" value="60"><button class="act-btn" onclick="addRec()">Добавить</button>
-    <hr style="margin:16px 0;border-color:var(--bd)">
-    <button class="act-btn" style="background:#16a34a;width:100%" onclick="exp()">📋 Скопировать код для GitHub</button>
+    <hr style="margin:16px 0;border-color:var(--bd)"><button class="act-btn" style="background:#16a34a;width:100%" onclick="exp()">📋 Скопировать код для GitHub</button>
   </div>
 </div>
-
 <script id="db">
 let challenges=[{"name":"Grief Challenge","author":"TheMold","verifier":"TheMold","points":150,"anomaly":"Anomaly 16","escape":"Car Escape","youtubeId":"PfguAWIRV48","rules":["Cruel Difficulty","Anomaly 16","Preset 3","You have only 1 day","No using weapons, but you can use a shotgun","No using Pepper spray","No using nightmare items (even they shouldn't be taken)","Nightmare mode","Fix the car and fix Elevator","Use the Caramel key (Replacing the TV puzzle)","No killing granny","No abuse","Load the shotgun only in the garage","You can only shoot the shotgun twice","No using door unlock","You can't avoid the creaky floors","Escape through the car"],"records":[]}];
 </script>
@@ -79,34 +67,22 @@ const yt=u=>{const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|
 function render(){
   const l=document.getElementById("cList");l.innerHTML="";
   challenges.forEach((c,i)=>l.innerHTML+=`<button class="item ${i===idx?'act':''}" onclick="idx=${i};render()"><b>#${i+1}</b><span>${c.name}</span></button>`);
-  const c=challenges[idx],d=document.getElementById("cDet");
-  if(!c){d.innerHTML="Пусто";return}
+  const c=challenges[idx],d=document.getElementById("cDet");if(!c){d.innerHTML="Пусто";return}
   d.innerHTML=`<h1>#${idx+1} — ${c.name}</h1><p style="color:var(--mt);font-size:14px">By <b>${c.author}</b> • Verified by <b>${c.verifier}</b></p><div class="vid"><iframe src="https://youtube.com{c.youtubeId}" allowfullscreen></iframe></div><div class="stats"><div><small>POINTS</small><h3>${c.points}</h3></div><div><small>ANOMALY</small><h3>${c.anomaly}</h3></div><div><small>ESCAPE</small><h3>${c.escape}</h3></div></div><h3>Rules</h3><ul>${c.rules.map(r=>`<li>${r}</li>`).join("")}</ul><h3>Records</h3><table>${c.records.length?c.records.map(r=>`<tr><td><b>100%</b></td><td><a href="${r.link}" target="_blank">${r.user}</a></td><td>${r.fps} FPS</td></tr>`).join(""):'<tr><td style="color:var(--mt)">Нет записей</td></tr>'}</table>`;
   const al=document.getElementById("aList"),sl=document.getElementById("rSel");al.innerHTML="";sl.innerHTML="";
-  challenges.forEach((c,i)=>{
-    sl.innerHTML+=`<option value="${i}">#${i+1} ${c.name}</option>`;
-    al.innerHTML+=`<div class="row"><span><b>#${i+1}</b> ${c.name}</span><div><button class="act-btn" style="padding:3px 7px;background:#d97706" onclick="editCh(${i})">✏️</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(${i})">✖</button></div></div>`;
-  });
+  challenges.forEach((c,i)=>{sl.innerHTML+=`<option value="${i}">#${i+1} ${c.name}</option>`;al.innerHTML+=`<div class="row"><span><b>#${i+1}</b> ${c.name}</span><div><button class="act-btn" style="padding:3px 7px;background:#d97706" onclick="editCh(${i})">✏️</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(${i})">✖</button></div></div>`});
 }
 function adm(){if(!ok&&prompt("Пароль:")!=="ade17ped0")return alert("Неверно");ok=1;tab('adm')}
-function editCh(i){
-  ed=i;const c=challenges[i];document.getElementById("fTitle").innerText="✏️ Редактировать #"+(i+1);document.getElementById("fBtn").innerText="Сохранить";document.getElementById("cBtn").classList.remove("hide");
-  document.getElementById("iName").value=c.name;document.getElementById("iAuth").value=c.author;document.getElementById("iVer").value=c.verifier;document.getElementById("iPts").value=c.points;document.getElementById("iAnom").value=c.anomaly;document.getElementById("iEsc").value=c.escape;document.getElementById("iVid").value=c.youtubeId;document.getElementById("iRules").value=c.rules.join("\n");rndRecs();
-}
+function editCh(i){ed=i;const c=challenges[i];document.getElementById("fTitle").innerText="✏️ Редактировать #"+(i+1);document.getElementById("fBtn").innerText="Сохранить";document.getElementById("cBtn").classList.remove("hide");document.getElementById("iName").value=c.name;document.getElementById("iAuth").value=c.author;document.getElementById("iVer").value=c.verifier;document.getElementById("iPts").value=c.points;document.getElementById("iAnom").value=c.anomaly;document.getElementById("iEsc").value=c.escape;document.getElementById("iVid").value=c.youtubeId;document.getElementById("iRules").value=c.rules.join("\n");rndRecs()}
 function rndRecs(){const er=document.getElementById("eRecs");er.innerHTML=ed>=0&&challenges[ed].records.length?"<h4>Рекорды:</h4>"+challenges[ed].records.map((r,ri)=>`<div class="row"><span>${r.user}</span><button class="act-btn" style="padding:2px 6px;background:#dc2626" onclick="challenges[ed].records.splice(${ri},1);rndRecs();render()">✖</button></div>`).join(""):"";}
-function rst(){ed=-1;document.getElementById("fTitle").innerText="➕ Новый челлендж";document.getElementById("fBtn").innerText="Добавить";document.getElementById("cBtn").classList.add("hide");["iName","iAuth","iVer","iAnom","iEsc","iVid","iRules"].forEach(id=>document.getElementById(id).value="");document.getElementById("iPts").value=100;document.getElementById("eRecs").innerHTML="";}
-function saveCh(){
-  const n=document.getElementById("iName").value.trim(),r=document.getElementById("iRules").value.trim();if(!n||!r)return alert("Заполните поля");
-  const a=document.getElementById("iAuth").value.trim()||"paychns",v=document.getElementById("iVer").value.trim()||a;
-  const o={name:n,author:a,verifier:v,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value.trim()),rules:r.split("\n").filter(Boolean),records:ed>=0?challenges[ed].records:[]};
-if(ed>=0)challenges[ed]=o;else challenges.push(o);rst();render();
-}
+function rst(){ed=-1;document.getElementById("fTitle").innerText="➕ Новый челлендж";document.getElementById("fBtn").innerText="Добавить";document.getElementById("cBtn").classList.add("hide");["iName","iAuth","iVer","iAnom","iEsc","iVid","iRules"].forEach(id=>document.getElementById(id).value="");document.getElementById("iPts").value=100;document.getElementById("eRecs").innerHTML=""}
+function saveCh(){const n=document.getElementById("iName").value.trim(),r=document.getElementById("iRules").value.trim();if(!n||!r)return alert("Заполните поля");const a=document.getElementById("iAuth").value.trim()||"paychns",v=document.getElementById("iVer").value.trim()||a;const o={name:n,author:a,verifier:v,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value.trim()),rules:r.split("\n").filter(Boolean),records:ed>=0?challenges[ed].records:[]};if(ed>=0)challenges[ed]=o;else challenges.push(o);rst();render()}
 function mv(i,d){if(i+d<0||i+d>=challenges.length)return;[challenges[i],challenges[i+d]]=[challenges[i+d],challenges[i]];if(ed>=0)rst();render()}
 function del(i){if(confirm("Удалить?")){challenges.splice(i,1);idx=0;if(ed>=0)rst();render()}}
 function addRec(){const u=document.getElementById("rUsr").value.trim();if(!u)return;challenges[document.getElementById("rSel").value].records.push({user:u,link:document.getElementById("rLnk").value||"https://youtube.com",fps:+document.getElementById("rFps").value||60});document.getElementById("rUsr").value="";if(ed>=0)rndRecs();render()}
-function exp(){document.getElementById("db").textContent=\nlet challenges=${JSON.stringify(challenges)};\n;navigator.clipboard.writeText("\n"+document.documentElement.outerHTML).then(()=>alert("Скопировано! Вставьте в index.html на GitHub."))}
-function tab(t){
-["List","Lb","Adm"].forEach(x=>{document.getElementById("v"+x).classList.toggle("hide",t!==x.toLowerCase());document.getElementById("b"+x).classList.toggle("act",t===x.toLowerCase())});
-if(t==="lb"){const s={};challenges.forEach(c=>{s[c.verifier]=(s[c.verifier]||0)+c.points;c.records.forEach(r=>{if(r.user!==c.verifier)s[r.user]=(s[r.user]||0)+c.points})});document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b-a).map(([u,p],i)=><tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>).join("")}
-}
+function exp(){document.getElementById("db").textContent=`\nlet challenges=${JSON.stringify(challenges)};\n`;navigator.clipboard.writeText("<!DOCTYPE html>\n"+document.documentElement.outerHTML).then(()=>alert("Скопировано!"))}
+function tab(t){["List","Lb","Adm"].forEach(x=>{document.getElementById("v"+x).classList.toggle("hide",t!==x.toLowerCase());document.getElementById("b"+x).classList.toggle("act",t===x.toLowerCase())});if(t==="lb"){const s={};challenges.forEach(c=>{s[c.verifier]=(s[c.verifier]||0)+c.points;c.records.forEach(r=>{if(r.user!==c.verifier)s[r.user]=(s[r.user]||0)+c.points})});document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b-a).map(([u,p],i)=>`<tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>`).join("")}}
 render();
+</script>
+</body>
+</html>
