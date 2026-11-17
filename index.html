@@ -33,7 +33,7 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
     <button class="btn" id="bLb" onclick="tab('lb')">Leaderboard</button>
     <button class="btn" id="bAdm" onclick="adm()">⚙️ Admin</button>
     <button class="btn" onclick="document.body.classList.toggle('dark')">🌓</button>
-    <a class="sub" href="https://discord.com" target="_blank">Submit</a>
+    <a class="sub" href="https://docs.google.com/forms/d/e/1FAIpQLSeXFoiKMoUJjPJgT9pfhJ-avRtNX3JS9ylW-6O75OXUdpsenw/viewform?usp=publish-editor" target="_blank">Submit</a>
   </div>
 </header>
 
@@ -42,7 +42,7 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
   <div class="box" id="cDet"></div>
   <div class="box">
     <h3>List Editors</h3><p style="margin:8px 0 16px;color:var(--mt)">👑 <b>paychns</b> (Owner)</p>
-    <h3>Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Beat on Cruel without cheats or glitches.<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies & presets.</p>
+    <h3>Submission Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Any difficulty is allowed (must match the challenge rules).<br>• No cheats, noclip, or game-breaking glitches (no abuse).<br>• Full recording from Day 1 with original game audio.<br>• Match all required anomalies & presets.</p>
   </div>
 </div>
 
@@ -51,10 +51,11 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
 <div class="grid hide" id="vAdm" style="grid-template-columns:1fr 1fr;max-width:1000px">
   <div class="box">
     <h3 style="margin-bottom:10px">➕ Новый челлендж</h3>
-    <input id="iName" placeholder="Название (например: Quiet Steps)">
-    <input id="iAuth" value="paychns" placeholder="Автор и Верификатор">
-    <input id="iPts" type="number" value="100" placeholder="Очки">
-    <input id="iAnom" placeholder="Аномалия (например: Anomaly 5)">
+    <input id="iName" placeholder="Challenge Name (название)">
+    <input id="iAuth" placeholder="Creator (автор идеи)">
+    <input id="iVer" placeholder="Verifier (кто прошел первым)">
+    <input id="iPts" type="number" value="100" placeholder="Очки (Points)">
+    <input id="iAnom" placeholder="Аномалия (например: Anomaly 5 или None)">
     <input id="iEsc" placeholder="Побег (например: Car Escape)">
     <input id="iVid" placeholder="Ссылка на YouTube">
     <textarea id="iRules" rows="5" placeholder="Условия (каждое с новой строки)"></textarea>
@@ -101,7 +102,8 @@ function addCh(){
   const n=document.getElementById("iName").value.trim(),r=document.getElementById("iRules").value.trim();
   if(!n||!r)return alert("Заполните название и правила");
   const a=document.getElementById("iAuth").value.trim()||"paychns";
-  challenges.push({name:n,author:a,verifier:a,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value.trim()),rules:r.split("\n").filter(Boolean),records:[]});
+  const v=document.getElementById("iVer").value.trim()||a;
+  challenges.push({name:n,author:a,verifier:v,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value.trim()),rules:r.split("\n").filter(Boolean),records:[]});
   document.getElementById("iName").value="";document.getElementById("iRules").value="";render();
 }
 function mv(i,d){if(i+d<0||i+d>=challenges.length)return;[challenges[i],challenges[i+d]]=[challenges[i+d],challenges[i]];render()}
