@@ -41,7 +41,7 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
   <div class="box" id="cList"></div>
   <div class="box" id="cDet"></div>
   <div class="box">
-    <h3>List Editors</h3><p style="margin:8px 0 16px;color:var(--mt)">👑 <b>TheMold</b> (Owner)</p>
+    <h3>List Editors</h3><p style="margin:8px 0 16px;color:var(--mt)">👑 <b>paychns</b> (Owner)</p>
     <h3>Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Beat on Cruel without cheats or glitches.<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies & presets.</p>
   </div>
 </div>
@@ -52,7 +52,7 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
   <div class="box">
     <h3 style="margin-bottom:10px">➕ Новый челлендж</h3>
     <input id="iName" placeholder="Название (например: Quiet Steps)">
-    <input id="iAuth" value="TheMold" placeholder="Автор и Верификатор">
+    <input id="iAuth" value="paychns" placeholder="Автор и Верификатор">
     <input id="iPts" type="number" value="100" placeholder="Очки">
     <input id="iAnom" placeholder="Аномалия (например: Anomaly 5)">
     <input id="iEsc" placeholder="Побег (например: Car Escape)">
@@ -79,7 +79,7 @@ let challenges=[{"name":"Grief Challenge","author":"TheMold","verifier":"TheMold
 </script>
 <script>
 let idx=0,ok=0;
-const yt=u=>{const m=u.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);return m&&m[2].length===11?m[2]:u};
+const yt=u=>{const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^#\&\?]{11})/);return m?m[1]:u};
 function render(){
   const l=document.getElementById("cList");l.innerHTML="";
   challenges.forEach((c,i)=>{l.innerHTML+=`<button class="item ${i===idx?'act':''}" onclick="idx=${i};render()"><b>#${i+1}</b><span>${c.name}</span></button>`});
@@ -96,12 +96,12 @@ function render(){
     al.innerHTML+=`<div class="row"><span><b>#${i+1}</b> ${c.name}</span><div><button class="act-btn" style="padding:3px 7px" onclick="mv(${i},-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(${i})">✖</button></div></div>`;
   });
 }
-function adm(){if(!ok&&prompt("Пароль (1234):")!=="1234")return alert("Неверно");ok=1;tab('adm')}
+function adm(){if(!ok&&prompt("Введите пароль:")!=="ade17ped0")return alert("Неверный пароль");ok=1;tab('adm')}
 function addCh(){
   const n=document.getElementById("iName").value.trim(),r=document.getElementById("iRules").value.trim();
   if(!n||!r)return alert("Заполните название и правила");
-  const a=document.getElementById("iAuth").value.trim()||"TheMold";
-  challenges.push({name:n,author:a,verifier:a,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value),rules:r.split("\n").filter(Boolean),records:[]});
+  const a=document.getElementById("iAuth").value.trim()||"paychns";
+  challenges.push({name:n,author:a,verifier:a,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value.trim()),rules:r.split("\n").filter(Boolean),records:[]});
   document.getElementById("iName").value="";document.getElementById("iRules").value="";render();
 }
 function mv(i,d){if(i+d<0||i+d>=challenges.length)return;[challenges[i],challenges[i+d]]=[challenges[i+d],challenges[i]];render()}
@@ -119,11 +119,10 @@ function tab(t){
   ["List","Lb","Adm"].forEach(x=>{document.getElementById("v"+x).classList.toggle("hide",t!==x.toLowerCase());document.getElementById("b"+x).classList.toggle("act",t===x.toLowerCase())});
   if(t==="lb"){
     const s={};challenges.forEach(c=>{s[c.verifier]=(s[c.verifier]||0)+c.points;c.records.forEach(r=>{if(r.user!==c.verifier)s[r.user]=(s[r.user]||0)+c.points})});
-    document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b[1]-a[1]).map(([u,p],i)=>`<tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>`).join("");
+    document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b-a).map(([u,p],i)=>`<tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>`).join("");
   }
 }
 render();
 </script>
 </body>
 </html>
-
