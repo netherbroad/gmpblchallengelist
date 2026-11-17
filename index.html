@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMPBL Challenge List</title>
+<style>
+:root{--bg:#f4f4f6;--sf:#fff;--tx:#1a1a1a;--mt:#666;--bd:#e0e0e0;--pr:#1a56db;--hv:#eef2ff}
+body.dark{--bg:#121214;--sf:#1c1c1f;--tx:#f3f4f6;--mt:#9ca3af;--bd:#2e2e32;--pr:#2563eb;--hv:#252529}
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}body{background:var(--bg);color:var(--tx)}
+header{background:var(--pr);color:#fff;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav{display:flex;gap:8px;align-items:center}.btn{background:none;border:none;color:#fff;font-weight:700;padding:8px 12px;border-radius:6px;cursor:pointer}
+.btn:hover,.btn.act{background:rgba(255,255,255,.2)}.sub{background:#fff;color:var(--pr);text-decoration:none;padding:7px 12px;border-radius:6px;font-weight:700;font-size:14px}
+.grid{display:grid;grid-template-columns:300px 1fr 260px;gap:20px;max-width:1300px;margin:20px auto;padding:0 16px}
+@media(max-width:950px){.grid{grid-template-columns:1fr}}
+.box{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px;height:fit-content}
+.item{display:flex;gap:12px;padding:10px 12px;border-radius:6px;cursor:pointer;border:none;background:none;width:100%;text-align:left;color:var(--tx);font-size:15px}
+.item:hover{background:var(--hv)}.item.act{background:var(--pr);color:#fff;font-weight:700}
+.vid{position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;margin:14px 0;background:#000}
+.vid iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:var(--bg);padding:12px;border-radius:8px;margin-bottom:16px;text-align:center}
+ul{padding-left:20px;line-height:1.6;margin:10px 0 18px}table{width:100%;border-collapse:collapse}td{padding:8px;border-bottom:1px solid var(--bd)}
+a{color:var(--pr);text-decoration:none;font-weight:700}.hide{display:none!important}
+input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+.act-btn{background:var(--pr);color:#fff;border:none;padding:9px 14px;border-radius:6px;font-weight:700;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
+</style>
+</head>
+<body>
+<header>
+  <h2>GMPBL Challenge List</h2>
+  <div class="nav">
+    <button class="btn act" id="bList" onclick="tab('list')">List</button>
+    <button class="btn" id="bLb" onclick="tab('lb')">Leaderboard</button>
+    <button class="btn" id="bAdm" onclick="adm()">⚙️ Admin</button>
+    <button class="btn" onclick="document.body.classList.toggle('dark')">🌓</button>
+    <a class="sub" href="https://discord.com" target="_blank">Submit</a>
+  </div>
+</header>
+
+<div class="grid" id="vList">
+  <div class="box" id="cList"></div>
+  <div class="box" id="cDet"></div>
+  <div class="box">
+    <h3>List Editors</h3><p style="margin:8px 0 16px;color:var(--mt)">👑 <b>TheMold</b> (Owner)</p>
+    <h3>Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Beat on Cruel without cheats or glitches.<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies & presets.</p>
+  </div>
+</div>
+
+<div class="grid hide" id="vLb" style="grid-template-columns:1fr;max-width:650px"><div class="box"><h2>Leaderboard</h2><table id="lbTbl" style="margin-top:12px"></table></div></div>
+
+<div class="grid hide" id="vAdm" style="grid-template-columns:1fr 1fr;max-width:1000px">
+  <div class="box">
+    <h3 style="margin-bottom:10px">➕ Новый челлендж</h3>
+    <input id="iName" placeholder="Название (например: Quiet Steps)">
+    <input id="iAuth" value="TheMold" placeholder="Автор и Верификатор">
+    <input id="iPts" type="number" value="100" placeholder="Очки">
+    <input id="iAnom" placeholder="Аномалия (например: Anomaly 5)">
+    <input id="iEsc" placeholder="Побег (например: Car Escape)">
+    <input id="iVid" placeholder="Ссылка на YouTube">
+    <textarea id="iRules" rows="5" placeholder="Условия (каждое с новой строки)"></textarea>
+    <button class="act-btn" onclick="addCh()">Добавить</button>
+  </div>
+  <div class="box">
+    <h3 style="margin-bottom:10px">📋 Управление</h3>
+    <div id="aList" style="margin-bottom:16px"></div>
+    <h3>➕ Добавить рекорд</h3>
+    <select id="rSel"></select>
+    <input id="rUsr" placeholder="Ник игрока">
+    <input id="rLnk" placeholder="Ссылка на YouTube">
+    <input id="rFps" type="number" value="60" placeholder="FPS">
+    <button class="act-btn" onclick="addRec()">Добавить рекорд</button>
+    <hr style="margin:18px 0;border-color:var(--bd)">
+    <button class="act-btn" style="background:#16a34a;width:100%" onclick="exp()">📋 Скопировать код для GitHub</button>
+  </div>
+</div>
+
+<script id="db">
+let challenges=[{"name":"Grief Challenge","author":"TheMold","verifier":"TheMold","points":150,"anomaly":"Anomaly 16","escape":"Car Escape","youtubeId":"PfguAWIRV48","rules":["Cruel Difficulty","Anomaly 16","Preset 3","You have only 1 day","No using weapons, but you can use a shotgun","No using Pepper spray","No using nightmare items (even they shouldn't be taken)","Nightmare mode","Fix the car and fix Elevator","Use the Caramel key (Replacing the TV puzzle)","No killing granny","No abuse","Load the shotgun only in the garage","You can only shoot the shotgun twice","No using door unlock","You can't avoid the creaky floors","Escape through the car"],"records":[]}];
+</script>
+<script>
+let idx=0,ok=0;
+const yt=u=>{const m=u.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);return m&&m[2].length===11?m[2]:u};
+function render(){
+  const l=document.getElementById("cList");l.innerHTML="";
+  challenges.forEach((c,i)=>{l.innerHTML+=`<button class="item ${i===idx?'act':''}" onclick="idx=${i};render()"><b>#${i+1}</b><span>${c.name}</span></button>`});
+  const c=challenges[idx],d=document.getElementById("cDet");
+  if(!c){d.innerHTML="Пусто";return}
+  d.innerHTML=`<h1>#${idx+1} — ${c.name}</h1><p style="color:var(--mt);font-size:14px">By <b>${c.author}</b> • Verified by <b>${c.verifier}</b></p>
+  <div class="vid"><iframe src="https://youtube.com{c.youtubeId}" allowfullscreen></iframe></div>
+  <div class="stats"><div><small>POINTS</small><h3>${c.points}</h3></div><div><small>ANOMALY</small><h3>${c.anomaly}</h3></div><div><small>ESCAPE</small><h3>${c.escape}</h3></div></div>
+  <h3>Rules</h3><ul>${c.rules.map(r=>`<li>${r}</li>`).join("")}</ul>
+  <h3>Records</h3><table>${c.records.length?c.records.map(r=>`<tr><td><b>100%</b></td><td><a href="${r.link}" target="_blank">${r.user}</a></td><td>${r.fps} FPS</td></tr>`).join(""):'<tr><td style="color:var(--mt)">Нет записей</td></tr>'}</table>`;
+  const al=document.getElementById("aList"),sl=document.getElementById("rSel");al.innerHTML="";sl.innerHTML="";
+  challenges.forEach((c,i)=>{
+    sl.innerHTML+=`<option value="${i}">#${i+1} ${c.name}</option>`;
+    al.innerHTML+=`<div class="row"><span><b>#${i+1}</b> ${c.name}</span><div><button class="act-btn" style="padding:3px 7px" onclick="mv(${i},-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(${i},1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(${i})">✖</button></div></div>`;
+  });
+}
+function adm(){if(!ok&&prompt("Пароль (1234):")!=="1234")return alert("Неверно");ok=1;tab('adm')}
+function addCh(){
+  const n=document.getElementById("iName").value.trim(),r=document.getElementById("iRules").value.trim();
+  if(!n||!r)return alert("Заполните название и правила");
+  const a=document.getElementById("iAuth").value.trim()||"TheMold";
+  challenges.push({name:n,author:a,verifier:a,points:+document.getElementById("iPts").value||100,anomaly:document.getElementById("iAnom").value||"Any",escape:document.getElementById("iEsc").value||"Any",youtubeId:yt(document.getElementById("iVid").value),rules:r.split("\n").filter(Boolean),records:[]});
+  document.getElementById("iName").value="";document.getElementById("iRules").value="";render();
+}
+function mv(i,d){if(i+d<0||i+d>=challenges.length)return;[challenges[i],challenges[i+d]]=[challenges[i+d],challenges[i]];render()}
+function del(i){if(confirm("Удалить?")){challenges.splice(i,1);idx=0;render()}}
+function addRec(){
+  const u=document.getElementById("rUsr").value.trim();if(!u)return;
+  challenges[document.getElementById("rSel").value].records.push({user:u,link:document.getElementById("rLnk").value||"https://youtube.com",fps:+document.getElementById("rFps").value||60});
+  document.getElementById("rUsr").value="";render();
+}
+function exp(){
+  document.getElementById("db").textContent=`\nlet challenges=${JSON.stringify(challenges)};\n`;
+  navigator.clipboard.writeText("<!DOCTYPE html>\n"+document.documentElement.outerHTML).then(()=>alert("Код скопирован! Вставьте его в index.html на GitHub."));
+}
+function tab(t){
+  ["List","Lb","Adm"].forEach(x=>{document.getElementById("v"+x).classList.toggle("hide",t!==x.toLowerCase());document.getElementById("b"+x).classList.toggle("act",t===x.toLowerCase())});
+  if(t==="lb"){
+    const s={};challenges.forEach(c=>{s[c.verifier]=(s[c.verifier]||0)+c.points;c.records.forEach(r=>{if(r.user!==c.verifier)s[r.user]=(s[r.user]||0)+c.points})});
+    document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b[1]-a[1]).map(([u,p],i)=>`<tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>`).join("");
+  }
+}
+render();
+</script>
+</body>
+</html>
 
