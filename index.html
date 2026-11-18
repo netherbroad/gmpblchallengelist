@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru"><head>
+<html lang="ru">
+<head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GMPBL Challenge List</title>
 <style>
@@ -23,302 +24,28 @@ input,textarea,select{width:100%;padding:8px;margin:4px 0 12px;border-radius:6px
 .act-btn{background:var(--pr);color:#fff;border:none;padding:9px 14px;border-radius:6px;font-weight:700;cursor:pointer}
 .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
 </style>
-<style id="vsc-direct-styles">/* Styles pour les contrôles de vitesse injectés */
-
-/* S'assurer que le parent de la vidéo peut positionner correctement les contrôleurs */
-video.vsc-initialized, .vsc-initialized {
-  position: relative !important;
-}
-
-/* Style pour le contrôleur */
-.vsc-controller {
-  position: absolute !important;
-  background: linear-gradient(180deg, rgba(30, 27, 24, 0.92) 0%, rgba(13, 12, 11, 0.92) 100%) !important;
-  color: #fff7de !important;
-  border-radius: 12px !important;
-  padding: 8px !important;
-  z-index: 9999999 !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 14px !important;
-  display: flex !important;
-  align-items: center !important;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35) !important;
-  transition: opacity 0.2s ease-in-out !important;
-  user-select: none !important;
-  opacity: 0.6 !important;
-  border: 1px solid rgba(247, 197, 29, 0.22) !important;
-  backdrop-filter: blur(8px) !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-}
-
-.vsc-controller:hover {
-  opacity: 1 !important;
-}
-
-.vsc-controller.vsc-hidden {
-  display: none !important;
-}
-
-.vsc-controller.vsc-top {
-  top: 5px !important;
-  right: 5px !important;
-}
-
-.vsc-controller.vsc-bottom {
-  bottom: 5px !important;
-  right: 5px !important;
-}
-
-.vsc-controller button {
-  background: rgba(27, 24, 20, 0.9) !important;
-  border: 1px solid #f7c51d !important;
-  color: #f7c51d !important;
-  font-size: 16px !important;
-  cursor: pointer !important;
-  width: 30px !important;
-  height: 30px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  margin: 0 3px !important;
-  border-radius: 50% !important;
-  transition: background-color 0.2s !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-}
-
-.vsc-controller button:hover {
-  background-color: #f7c51d !important;
-  color: #171412 !important;
-  transform: scale(1.1) !important;
-}
-
-.vsc-controller button:active {
-  background-color: #d9a90d !important;
-  color: #171412 !important;
-}
-
-.vsc-controller-speed {
-  font-weight: bold !important;
-  margin: 0 8px !important;
-  min-width: 58px !important;
-  text-align: center !important;
-  font-size: 16px !important;
-  background-color: rgba(0, 0, 0, 0.35) !important;
-  padding: 4px 8px !important;
-  border-radius: 999px !important;
-  color: #f7c51d !important;
-  border: 1px solid rgba(247, 197, 29, 0.24) !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-}
-
-/* Icônes des boutons */
-.vsc-controller-slower::before {
-  content: "−" !important;
-  font-size: 20px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-faster::before {
-  content: "+" !important;
-  font-size: 20px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-reset::before {
-  content: "1x" !important;
-  font-size: 14px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-toggle::before {
-  content: "⇄" !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
-}
-
-/* Indicateur de vitesse */
-.vsc-speed-indicator {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-  background: linear-gradient(180deg, rgba(30, 27, 24, 0.95) 0%, rgba(13, 12, 11, 0.95) 100%);
-  color: #f7c51d;
-  padding: 12px 16px;
-  border-radius: 999px;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  border: 1px solid rgba(247, 197, 29, 0.3);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(8px);
-}
-</style><style id="vsc-styles">/* Styles pour les contrôles de vitesse injectés */
-
-/* S'assurer que le parent de la vidéo peut positionner correctement les contrôleurs */
-video.vsc-initialized, .vsc-initialized {
-  position: relative !important;
-}
-
-/* Style pour le contrôleur */
-.vsc-controller {
-  position: absolute !important;
-  background: linear-gradient(180deg, rgba(30, 27, 24, 0.92) 0%, rgba(13, 12, 11, 0.92) 100%) !important;
-  color: #fff7de !important;
-  border-radius: 12px !important;
-  padding: 8px !important;
-  z-index: 9999999 !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 14px !important;
-  display: flex !important;
-  align-items: center !important;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35) !important;
-  transition: opacity 0.2s ease-in-out !important;
-  user-select: none !important;
-  opacity: 0.6 !important;
-  border: 1px solid rgba(247, 197, 29, 0.22) !important;
-  backdrop-filter: blur(8px) !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-}
-
-.vsc-controller:hover {
-  opacity: 1 !important;
-}
-
-.vsc-controller.vsc-hidden {
-  display: none !important;
-}
-
-.vsc-controller.vsc-top {
-  top: 5px !important;
-  right: 5px !important;
-}
-
-.vsc-controller.vsc-bottom {
-  bottom: 5px !important;
-  right: 5px !important;
-}
-
-.vsc-controller button {
-  background: rgba(27, 24, 20, 0.9) !important;
-  border: 1px solid #f7c51d !important;
-  color: #f7c51d !important;
-  font-size: 16px !important;
-  cursor: pointer !important;
-  width: 30px !important;
-  height: 30px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  margin: 0 3px !important;
-  border-radius: 50% !important;
-  transition: background-color 0.2s !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-}
-
-.vsc-controller button:hover {
-  background-color: #f7c51d !important;
-  color: #171412 !important;
-  transform: scale(1.1) !important;
-}
-
-.vsc-controller button:active {
-  background-color: #d9a90d !important;
-  color: #171412 !important;
-}
-
-.vsc-controller-speed {
-  font-weight: bold !important;
-  margin: 0 8px !important;
-  min-width: 58px !important;
-  text-align: center !important;
-  font-size: 16px !important;
-  background-color: rgba(0, 0, 0, 0.35) !important;
-  padding: 4px 8px !important;
-  border-radius: 999px !important;
-  color: #f7c51d !important;
-  border: 1px solid rgba(247, 197, 29, 0.24) !important;
-  box-sizing: border-box !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-}
-
-/* Icônes des boutons */
-.vsc-controller-slower::before {
-  content: "−" !important;
-  font-size: 20px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-faster::before {
-  content: "+" !important;
-  font-size: 20px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-reset::before {
-  content: "1x" !important;
-  font-size: 14px !important;
-  font-weight: bold !important;
-}
-
-.vsc-controller-toggle::before {
-  content: "⇄" !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
-}
-
-/* Indicateur de vitesse */
-.vsc-speed-indicator {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-  background: linear-gradient(180deg, rgba(30, 27, 24, 0.95) 0%, rgba(13, 12, 11, 0.95) 100%);
-  color: #f7c51d;
-  padding: 12px 16px;
-  border-radius: 999px;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  border: 1px solid rgba(247, 197, 29, 0.3);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(8px);
-}
-</style></head>
+</head>
 <body>
 <header>
   <h2>GMPBL Challenge List</h2>
   <div class="nav">
-    <button class="btn" id="bList" onclick="tab('list')">List</button>
+    <button class="btn act" id="bList" onclick="tab('list')">List</button>
     <button class="btn" id="bLb" onclick="tab('lb')">Leaderboard</button>
-    <button class="btn act" id="bAdm" onclick="adm()">⚙️ Admin</button>
+    <button class="btn" id="bAdm" onclick="adm()">⚙️ Admin</button>
     <button class="btn" onclick="document.body.classList.toggle('dark')">🌓</button>
     <a class="sub" href="https://google.com" target="_blank">Submit</a>
   </div>
 </header>
-<div class="grid hide" id="vList">
-  <div class="box" id="cList"><button class="item act" onclick="idx=0;render()"><b>#1</b><span>Grief Challenge</span></button><button class="item " onclick="idx=1;render()"><b>#2</b><span>Speedrunner</span></button></div>
-  <div class="box" id="cDet"><h1>#1 — Grief Challenge</h1><p style="color:var(--mt);font-size:14px">By <b>TheMold</b> • Verified by <b>TheMold</b></p><div class="vid"><iframe src="https://youtube.com{c.youtubeId}" allowfullscreen=""></iframe></div><div class="stats"><div><small>POINTS</small><h3>150</h3></div><div><small>ANOMALY</small><h3>Anomaly 16</h3></div><div><small>ESCAPE</small><h3>Car Escape</h3></div></div><h3>Rules</h3><ul><li>Cruel Difficulty</li><li>Anomaly 16</li><li>Preset 3</li><li>You have only 1 day</li><li>No using weapons, but you can use a shotgun</li><li>No using Pepper spray</li><li>No using nightmare items (even they shouldn't be taken)</li><li>Nightmare mode</li><li>Fix the car and fix Elevator</li><li>Use the Caramel key (Replacing the TV puzzle)</li><li>No killing granny</li><li>No abuse</li><li>Load the shotgun only in the garage</li><li>You can only shoot the shotgun twice</li><li>No using door unlock</li><li>You can't avoid the creaky floors</li><li>Escape through the car</li></ul><h3>Records</h3><table><tbody><tr><td style="color:var(--mt)">Нет записей</td></tr></tbody></table></div>
+<div class="grid" id="vList">
+  <div class="box" id="cList"></div>
+  <div class="box" id="cDet"></div>
   <div class="box">
     <h3>List Editors</h3><p style="margin:8px 0 16px;color:var(--mt)">👑 <b>paychns</b> (Owner)</p>
-    <h3>Submission Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Any difficulty is allowed (must match challenge rules).<br>• No cheats, or glitches.<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies &amp; presets.</p>
+    <h3>Submission Rules</h3><p style="color:var(--mt);font-size:14px;line-height:1.5">• Any difficulty is allowed (must match challenge rules).<br>• No cheats, noclip, or glitches (no abuse).<br>• Full recording from Day 1 with game audio.<br>• Match all required anomalies & presets.</p>
   </div>
 </div>
 <div class="grid hide" id="vLb" style="grid-template-columns:1fr;max-width:650px"><div class="box"><h2>Leaderboard</h2><table id="lbTbl" style="margin-top:12px"></table></div></div>
-<div class="grid" id="vAdm" style="grid-template-columns:1fr 1fr;max-width:1000px">
+<div class="grid hide" id="vAdm" style="grid-template-columns:1fr 1fr;max-width:1000px">
   <div class="box">
     <h3 id="fTitle" style="margin-bottom:10px">➕ Новый челлендж</h3>
     <input id="iName" placeholder="Challenge Name"><input id="iAuth" placeholder="Creator"><input id="iVer" placeholder="Verifier"><input id="iPts" type="number" value="100" placeholder="Points"><input id="iAnom" placeholder="Anomaly"><input id="iEsc" placeholder="Escape"><input id="iVid" placeholder="YouTube Link"><textarea id="iRules" rows="5" placeholder="Условия (с новой строки)"></textarea>
@@ -326,13 +53,13 @@ video.vsc-initialized, .vsc-initialized {
     <div id="eRecs" style="margin-top:14px"></div>
   </div>
   <div class="box">
-    <h3 style="margin-bottom:10px">📋 Управление</h3><div id="aList" style="margin-bottom:16px"><div class="row"><span><b>#1</b> Grief Challenge</span><div><button class="act-btn" style="padding:3px 7px;background:#d97706" onclick="editCh(0)">✏️</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(0,-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(0,1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(0)">✖</button></div></div><div class="row"><span><b>#2</b> Speedrunner</span><div><button class="act-btn" style="padding:3px 7px;background:#d97706" onclick="editCh(1)">✏️</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(1,-1)">⬆</button> <button class="act-btn" style="padding:3px 7px" onclick="mv(1,1)">⬇</button> <button class="act-btn" style="padding:3px 7px;background:#dc2626" onclick="del(1)">✖</button></div></div></div>
-    <h3>➕ Добавить рекорд</h3><select id="rSel"><option value="0">#1 Grief Challenge</option><option value="1">#2 Speedrunner</option></select><input id="rUsr" placeholder="Ник"><input id="rLnk" placeholder="YouTube"><input id="rFps" type="number" value="60"><button class="act-btn" onclick="addRec()">Добавить</button>
+    <h3 style="margin-bottom:10px">📋 Управление</h3><div id="aList" style="margin-bottom:16px"></div>
+    <h3>➕ Добавить рекорд</h3><select id="rSel"></select><input id="rUsr" placeholder="Ник"><input id="rLnk" placeholder="YouTube"><input id="rFps" type="number" value="60"><button class="act-btn" onclick="addRec()">Добавить</button>
     <hr style="margin:16px 0;border-color:var(--bd)"><button class="act-btn" style="background:#16a34a;width:100%" onclick="exp()">📋 Скопировать код для GitHub</button>
   </div>
 </div>
 <script id="db">
-let challenges=[{"name":"Grief Challenge","author":"TheMold","verifier":"TheMold","points":150,"anomaly":"Anomaly 16","escape":"Car Escape","youtubeId":"PfguAWIRV48","rules":["Cruel Difficulty","Anomaly 16","Preset 3","You have only 1 day","No using weapons, but you can use a shotgun","No using Pepper spray","No using nightmare items (even they shouldn't be taken)","Nightmare mode","Fix the car and fix Elevator","Use the Caramel key (Replacing the TV puzzle)","No killing granny","No abuse","Load the shotgun only in the garage","You can only shoot the shotgun twice","No using door unlock","You can't avoid the creaky floors","Escape through the car"],"records":[]},{"name":"Speedrunner","author":"Zem1x","verifier":"neverseen","points":100,"anomaly":"None","escape":"Any","youtubeId":"FNnbKDjbi7ECS44f","rules":["Easy","Escape in 2.5 minutes"],"records":[]}];
+let challenges=[{"name":"Grief Challenge","author":"TheMold","verifier":"TheMold","points":150,"anomaly":"Anomaly 16","escape":"Car Escape","youtubeId":"PfguAWIRV48","rules":["Cruel Difficulty","Anomaly 16","Preset 3","You have only 1 day","No using weapons, but you can use a shotgun","No using Pepper spray","No using nightmare items (even they shouldn't be taken)","Nightmare mode","Fix the car and fix Elevator","Use the Caramel key (Replacing the TV puzzle)","No killing granny","No abuse","Load the shotgun only in the garage","You can only shoot the shotgun twice","No using door unlock","You can't avoid the creaky floors","Escape through the car"],"records":[]}];
 </script>
 <script>
 let idx=0,ok=0,ed=-1;
@@ -353,10 +80,21 @@ function saveCh(){const n=document.getElementById("iName").value.trim(),r=docume
 function mv(i,d){if(i+d<0||i+d>=challenges.length)return;[challenges[i],challenges[i+d]]=[challenges[i+d],challenges[i]];if(ed>=0)rst();render()}
 function del(i){if(confirm("Удалить?")){challenges.splice(i,1);idx=0;if(ed>=0)rst();render()}}
 function addRec(){const u=document.getElementById("rUsr").value.trim();if(!u)return;challenges[document.getElementById("rSel").value].records.push({user:u,link:document.getElementById("rLnk").value||"https://youtube.com",fps:+document.getElementById("rFps").value||60});document.getElementById("rUsr").value="";if(ed>=0)rndRecs();render()}
-function exp(){document.getElementById("db").textContent=`\nlet challenges=${JSON.stringify(challenges)};\n`;navigator.clipboard.writeText("<!DOCTYPE html>\n"+document.documentElement.outerHTML).then(()=>alert("Скопировано!"))}
+function exp(){
+  const clone=document.documentElement.cloneNode(true);
+  clone.querySelectorAll('style[id^="vsc"]').forEach(e=>e.remove());
+  clone.querySelector("#vList").classList.remove("hide");
+  clone.querySelector("#vLb").classList.add("hide");
+  clone.querySelector("#vAdm").classList.add("hide");
+  clone.querySelector("#bList").classList.add("act");
+  clone.querySelector("#bLb").classList.remove("act");
+  clone.querySelector("#bAdm").classList.remove("act");
+  clone.querySelector("body").classList.remove("dark");
+  clone.querySelector("#db").textContent=`\nlet challenges=${JSON.stringify(challenges)};\n`;
+  navigator.clipboard.writeText("<!DOCTYPE html>\n"+clone.outerHTML).then(()=>alert("Чистый код скопирован! Вставьте в index.html на GitHub."));
+}
 function tab(t){["List","Lb","Adm"].forEach(x=>{document.getElementById("v"+x).classList.toggle("hide",t!==x.toLowerCase());document.getElementById("b"+x).classList.toggle("act",t===x.toLowerCase())});if(t==="lb"){const s={};challenges.forEach(c=>{s[c.verifier]=(s[c.verifier]||0)+c.points;c.records.forEach(r=>{if(r.user!==c.verifier)s[r.user]=(s[r.user]||0)+c.points})});document.getElementById("lbTbl").innerHTML=Object.entries(s).sort((a,b)=>b-a).map(([u,p],i)=>`<tr><td><b>#${i+1}</b></td><td>${u}</td><td><b>${p} pts</b></td></tr>`).join("")}}
 render();
 </script>
-
-
-<div id="vsc-speed-display" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(rgba(30, 27, 24, 0.95) 0%, rgba(13, 12, 11, 0.95) 100%); color: rgb(247, 197, 29); padding: 16px 28px; border-radius: 18px; font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.35) 0px 16px 40px; opacity: 0; transition: opacity 0.3s; pointer-events: none; text-align: center; border: 1px solid rgba(247, 197, 29, 0.28); backdrop-filter: blur(10px); letter-spacing: 0.02em;"></div><div class="vsc-floating-icon" style="background-image: url(&quot;moz-extension://36fbd397-4f1a-496b-8063-101c7e2ea373/icons/icon-32.png&quot;);" title="Video speed control"></div></body></html>
+</body>
+</html>
